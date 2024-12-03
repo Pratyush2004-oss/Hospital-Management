@@ -18,13 +18,15 @@ import Appointment from './_components/Appointment'
 const page = () => {
   return (
     <div>
+      {/* Navbar */}
       <nav className='sticky top-0 z-50 flex items-center justify-between p-4 bg-white '>
         <Link href={'/'} className='text-3xl font-extrabold'>Hospi<span className='text-red-500'>TAL</span></Link>
         <div className='items-center hidden gap-4 md:flex'>
-          <Link href={'#doctors'} className='text-xl font-bold'>DOCTORS</Link>
-          <Link href={'#services'} className='text-xl font-bold'>SERVICES</Link>
-          <Link href={'#medicos'} className='text-xl font-bold'>MEDICOS</Link>
-          <Link href={'#appointment'} className='text-xl font-bold'>APPOINTMENT</Link>
+          <Link href={'#doctors'} className='text-lg font-bold'>DOCTORS</Link>
+          <Link href={'#services'} className='text-lg font-bold'>SERVICES</Link>
+          <Link href={'#medicos'} className='text-lg font-bold'>MEDICOS</Link>
+          <Link href={'#appointment'} className='text-lg font-bold'>APPOINTMENT</Link>
+          <Link href={'login'} className='text-lg font-bold text-blue-500 underline'>Login</Link>
         </div>
         <div className='md:hidden'>
           <DropdownMenu >
@@ -85,15 +87,13 @@ const page = () => {
       <div id='medicos'></div>
 
       {/* Appointment */}
-      <div className='grid grid-cols-1 lg:grid-cols-3 gap-4 p-10 min-h-[75vh] bg-red-300' id='appointment'>
+      <div className='grid grid-cols-1 gap-4 p-10 bg-red-300 lg:grid-cols-3' id='appointment'>
         <Appointment />
         <div className='hidden lg:block'>
-        <Image src={'/images/book-img.svg'} width={400} height={400} alt='appointment'/>
+          <Image src={'/images/book-img.svg'} width={400} height={400} alt='appointment' />
         </div>
       </div>
     </div>
-
-
   )
 }
 

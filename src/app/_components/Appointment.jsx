@@ -9,7 +9,9 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-
+import { Problem } from '@/config/Specialization'
+import { usePatientStore } from '@/store/patientStore'
+import { InfinityIcon } from 'lucide-react'
 import React, { useState } from 'react'
 
 const Appointment = () => {
@@ -22,17 +24,25 @@ const Appointment = () => {
         mobile: '',
         appointmentDate: ''
     });
+    const { loading, error, bookAppointment } = usePatientStore();
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(input);
+
+        bookAppointment(input);
+    }
     return (
         <div className='col-span-2'>
             <h1 className='font-serif text-3xl font-extrabold'>Book Your Appointment</h1>
-            <div className='grid grid-cols-1 gap-4 p-4 my-5 border-2 rounded-lg shadow-lg sm:grid-cols-2'>
+            <div className='grid grid-cols-1 gap-4 p-4 my-5 border-2 rounded-lg shadow-lg md:grid-cols-2'>
                 <div className='font-bold'>
                     <Label className='font-bold'>Full Name</Label>
-                    <Input placeholder='Name' value={input.name} onChange={(e) => setInput({ ...input, name: e.target.value })} />
+                    <Input placeholder='Name' required value={input.name} onChange={(e) => setInput({ ...input, name: e.target.value })} />
                 </div>
                 <div className='font-bold'>
                     <Label className='font-bold'>Age</Label>
-                    <Input placeholder='Age' type='number' value={input.age} onChange={(e) => setInput({ ...input, age: e.target.value })} />
+                    <Input placeholder='Age' required min={0} type='number' value={input.age} onChange={(e) => setInput({ ...input, age: e.target.value })} />
                 </div>
                 <div className='font-bold'>
                     <Label className='font-bold'>Gender</Label>
@@ -49,32 +59,36 @@ const Appointment = () => {
                 </div>
                 <div className='font-bold'>
                     <Label className='font-bold'>Address</Label>
-                    <Input placeholder='Address' />
+                    <Input placeholder='Address' required value={input.address} onChange={(e) => setInput({ ...input, address: e.target.value })} />
                 </div>
                 <div className='font-bold'>
                     <Label className='font-bold'>Problem</Label>
-                    <Select>
+                    <Select onValueChange={(e) => setInput({ ...input, problem: e })}>
                         <SelectTrigger className="">
                             <SelectValue placeholder="Problem" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="light">Light</SelectItem>
-                            <SelectItem value="dark">Dark</SelectItem>
-                            <SelectItem value="system">System</SelectItem>
+                            {
+                                Problem.map((item) => (
+                                    <SelectItem key={item} value={item}>{item}</SelectItem>
+                                ))
+                            }
                         </SelectContent>
                     </Select>
                 </div>
                 <div className='font-bold'>
                     <Label className='font-bold'>Mobile Number</Label>
-                    <Input placeholder='Mobile Number' value={input.mobile} onChange={(e) => setInput({ ...input, mobile: e.target.value })} />
+                    <Input placeholder='Mobile Number' required value={input.mobile} onChange={(e) => setInput({ ...input, mobile: e.target.value })} />
                 </div>
                 <div className='font-bold'>
                     <Label className='font-bold'>Appointment Date</Label>
-                    <Input type='date' placeholder='Appointment Date' value={input.appointmentDate} onChange={(e) => setInput({ ...input, appointmentDate: e.target.value })} />
+                    <Input type='date' required placeholder='Appointment Date' value={input.appointmentDate} onChange={(e) => setInput({ ...input, appointmentDate: e.target.value })} />
                 </div>
 
-                <div className='col-span-2'>
-                    <Button className='w-full text-lg font-bold text-red-500 bg-transparent rounded-full' variant={'outline'} >Submit</Button>
+                <div className='md:col-span-2'>
+                    <Button disabled={loading} onClick={handleSubmit} className='w-full text-lg font-bold text-red-500 bg-transparent rounded-full' variant={'outline'} >
+                        {loading ? <InfinityIcon className='animate-pulse' /> : 'Book Appointment'}
+                    </Button>
                 </div>
 
 
