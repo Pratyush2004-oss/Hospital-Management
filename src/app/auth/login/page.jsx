@@ -13,8 +13,11 @@ const Login = () => {
         loginType: ''
     });
     return (
-        <div className='flex items-center justify-between min-h-screen'>
-            <div className='grid grid-cols-1 gap-5 mx-auto border-4 border-red-500 rounded-lg shadow-lg md:w-2/3 p-7'>
+        <div className='flex items-center justify-between p-7 min-h-[85vh]'>
+            <div className='grid w-full grid-cols-1 gap-5 mx-auto border-4 border-red-500 rounded-lg shadow-lg sm:w-1/2 p-7'>
+                <div className='border-b-4 border-red-500'>
+                    <h1 className='font-mono text-3xl font-bold text-center'>Login</h1>
+                </div>
                 <div className='text-lg font-bold'>
                     <Label>Email</Label>
                     <Input type='email' placeholder='Email' value={input.email} onChange={(e) => setInput({ ...input, email: e.target.value })} />
