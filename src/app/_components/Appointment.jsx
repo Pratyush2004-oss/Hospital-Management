@@ -28,8 +28,6 @@ const Appointment = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(input);
-
         bookAppointment(input);
     }
     return (

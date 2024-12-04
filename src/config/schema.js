@@ -1,4 +1,4 @@
-import { integer, pgTable, serial, text, varchar } from "drizzle-orm/pg-core";
+import { date, integer, pgTable, serial, text, varchar } from "drizzle-orm/pg-core";
 
 export const Doctors = pgTable("doctors",
     {
@@ -21,6 +21,6 @@ export const Patients = pgTable("patients",
         address: text("address").notNull(),
         problem: varchar("problem").notNull(),
         mobile: varchar("mobile").notNull().unique(),
-        appointmentDate: varchar("appointmentDate").notNull(),
+        appointmentDate: date("appointmentDate").notNull(),
     }
 )

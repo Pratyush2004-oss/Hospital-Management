@@ -56,7 +56,7 @@ const page = () => {
 
       {/* Home section */}
       <div className='flex flex-col min-h-[75vh] bg-red-300'>
-        <div className='flex flex-wrap items-center justify-between p-4 h-2/3'>
+        <div className='flex flex-wrap items-center p-4 justify-evenly h-2/3'>
           <div className='p-5 text-3xl font-extrabold border-l-8 border-red-700'>
             <h1>HOSPI<span className='text-red-500'>TAL</span></h1>
             <h1 className='font-light'>IPD, OPD & Emergency</h1>
@@ -65,7 +65,7 @@ const page = () => {
             <Image src={'/images/home-img.svg'} width={330} height={500} alt={'home'} />
           </div>
         </div>
-        <div className='p-5 h-1/3'>
+        <div className='flex flex-col items-center p-5 h-1/3'>
           <h1 className='font-serif text-3xl font-bold'>Call 108 for Ambulance</h1>
           <Button variant='destructive' size='lg'>Call Now</Button>
         </div>

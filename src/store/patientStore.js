@@ -1,5 +1,5 @@
-import { db } from "@/config/index";
-import { Patients } from "@/config/schema";
+import { db } from "../config/index";
+import { Patients } from "../config/schema";
 import { eq } from "drizzle-orm";
 import { toast } from "sonner";
 import { create } from "zustand";
@@ -16,16 +16,33 @@ export const usePatientStore = create((set) => ({
                 toast.error("Please fill all the fields");
             }
             const user = await db.select().from(Patients).where(eq(Patients.mobile, input.mobile));
-            if (!user) {
-                const response = await db.insert(Patients).values(input);
+            console.log(user[0])
+            if (user[0]) {
+                const response = await db.update(Patients).set({
+                    name: input.name,
+                    age: input.age,
+                    gender: input.gender,
+                    address: input.address,
+                    problem: input.problem,
+                    mobile: input.mobile,
+                    appointmentDate: input.appointmentDate
+                }).where(eq(Patients.mobile, input.mobile));
                 if (response) {
-                    toast.success("Appointment Booked Successfully");
+                    toast.success("Appointment Updated Successfully");
                 }
             }
             else {
-                const response = await db.update(Patients).set(input).where(eq(Patients.mobile, input.mobile));
+                const response = await db.insert(Patients).values({
+                    name: input.name,
+                    age: input.age,
+                    gender: input.gender,
+                    address: input.address,
+                    problem: input.problem,
+                    mobile: input.mobile,
+                    appointmentDate: input.appointmentDate
+                });
                 if (response) {
-                    toast.success("Appointment Updated Successfully");
+                    toast.success("Appointment Booked Successfully");
                 }
             }
             set({ loading: false, error: null });
