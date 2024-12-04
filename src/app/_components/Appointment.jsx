@@ -24,11 +24,21 @@ const Appointment = () => {
         mobile: '',
         appointmentDate: ''
     });
-    const { loading, error, bookAppointment } = usePatientStore();
+    const { loading, bookAppointment } = usePatientStore();
 
     const handleSubmit = (e) => {
         e.preventDefault();
         bookAppointment(input);
+
+        setInput({
+            name: '',
+            age: '',
+            gender: '',
+            address: '',
+            problem: '',
+            mobile: '',
+            appointmentDate: ''
+        })
     }
     return (
         <div className='col-span-2'>

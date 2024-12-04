@@ -53,6 +53,8 @@ export const usePatientStore = create((set) => ({
             set({ loading: false });
         }
 
-    }
+    },
+
+    
 }
 ));

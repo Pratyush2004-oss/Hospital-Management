@@ -26,14 +26,14 @@ const page = () => {
           <Link href={'#services'} className='text-lg font-bold'>SERVICES</Link>
           <Link href={'#medicos'} className='text-lg font-bold'>MEDICOS</Link>
           <Link href={'#appointment'} className='text-lg font-bold'>APPOINTMENT</Link>
-          <Link href={'login'} className='text-lg font-bold text-blue-500 underline'>Login</Link>
+          <Link href={'/auth/login'} className='text-lg font-bold text-blue-500 underline'>Login</Link>
         </div>
         <div className='md:hidden'>
           <DropdownMenu >
             <DropdownMenuTrigger><Menu /></DropdownMenuTrigger>
             <DropdownMenuContent className='md:hidden'>
               <DropdownMenuLabel>
-                <Link href={'login'}>Login</Link>
+                <Link href={'/auth/login'}>Login</Link>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
