@@ -14,6 +14,7 @@ export const usePatientStore = create((set) => ({
         try {
             if (!input.name || !input.age || !input.gender || !input.address || !input.problem || !input.mobile || !input.appointmentDate) {
                 toast.error("Please fill all the fields");
+                return;
             }
             const user = await db.select().from(Patients).where(eq(Patients.mobile, input.mobile));
             console.log(user[0])

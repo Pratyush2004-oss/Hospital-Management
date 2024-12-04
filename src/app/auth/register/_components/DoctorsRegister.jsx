@@ -11,8 +11,11 @@ import {
 } from '@/components/ui/select';
 import { specialization } from '@/config/Specialization';
 import Link from 'next/link';
+import { useDoctorStore } from '@/store/doctorStore';
+import { Loader2 } from 'lucide-react';
 
 const DoctorsRegister = () => {
+    const { loading, registerDoctor } = useDoctorStore();
     const [input, setInput] = useState({
         name: '',
         experience: '',
@@ -25,7 +28,17 @@ const DoctorsRegister = () => {
 
     const handleRegister = (e) => {
         e.preventDefault();
-        console.log(input)
+        registerDoctor(input);
+
+        setInput({
+            name: '',
+            experience: '',
+            email: '',
+            password: '',
+            hospital: '',
+            specialization: '',
+            password: ''
+        })
     }
     return (
         <div className='flex items-center justify-between min-h-[75vh] p-7'>
@@ -38,7 +51,7 @@ const DoctorsRegister = () => {
                     <Input type='text' placeholder='Name' value={input.name} onChange={(e) => setInput({ ...input, name: e.target.value })} />
                 </div>
                 <div className='text-lg font-bold'>
-                    <Label>Experience</Label>
+                    <Label>Experience (years)</Label>
                     <Input type='number' placeholder='Experience' value={input.experience} onChange={(e) => setInput({ ...input, experience: e.target.value })} />
                 </div>
                 <div className='text-lg font-bold'>
@@ -68,7 +81,9 @@ const DoctorsRegister = () => {
                     <Input placeholder='Password' type='password' value={input.password} onChange={(e) => setInput({ ...input, password: e.target.value })} />
                 </div>
                 <div className='text-lg font-bold md:col-span-2'>
-                    <Button variant='outline' onClick={handleRegister} className='w-full bg-red-300 rounded-full'>Register</Button>
+                    <Button variant='outline' onClick={handleRegister} className='w-full bg-red-300 rounded-full'>{
+                        loading ? <Loader2 className='text-red-700 animate-spin'/> : 'Register'
+                    }</Button>
                     <h1 className='m-1 text-sm'>Already have an account?<Link href={'/auth/login'} className='text-blue-500 underline'>Login</Link></h1>
                 </div>
 
