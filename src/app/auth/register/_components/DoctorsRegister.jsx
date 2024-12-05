@@ -11,11 +11,13 @@ import {
 } from '@/components/ui/select';
 import { specialization } from '@/config/Specialization';
 import Link from 'next/link';
-import { useDoctorStore } from '@/store/doctorStore';
+import { useStaffStore } from '@/store/staffStore';
 import { Loader2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 const DoctorsRegister = () => {
-    const { loading, registerDoctor } = useDoctorStore();
+    const { loading, registerDoctor, navigate } = useStaffStore();
+    const router = useRouter();
     const [input, setInput] = useState({
         name: '',
         experience: '',
@@ -26,10 +28,9 @@ const DoctorsRegister = () => {
         password: ''
     });
 
-    const handleRegister = (e) => {
+    const handleRegister = async (e) => {
         e.preventDefault();
         registerDoctor(input);
-
         setInput({
             name: '',
             experience: '',
@@ -39,6 +40,10 @@ const DoctorsRegister = () => {
             specialization: '',
             password: ''
         })
+        await new Promise((resolve) => setTimeout(resolve, 2000))
+        if (navigate) {
+            router.push('/auth/login')
+        }
     }
     return (
         <div className='flex items-center justify-between min-h-[75vh] p-7'>
@@ -82,7 +87,7 @@ const DoctorsRegister = () => {
                 </div>
                 <div className='text-lg font-bold md:col-span-2'>
                     <Button variant='outline' onClick={handleRegister} className='w-full bg-red-300 rounded-full'>{
-                        loading ? <Loader2 className='text-red-700 animate-spin'/> : 'Register'
+                        loading ? <Loader2 className='text-red-700 animate-spin' /> : 'Register'
                     }</Button>
                     <h1 className='m-1 text-sm'>Already have an account?<Link href={'/auth/login'} className='text-blue-500 underline'>Login</Link></h1>
                 </div>

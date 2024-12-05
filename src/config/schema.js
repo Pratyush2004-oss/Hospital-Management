@@ -8,7 +8,8 @@ export const Doctors = pgTable("doctors",
         experience: integer("experience").notNull().default(0),
         hospital: varchar("hospital").notNull(),
         email: varchar("email").notNull().unique(),
-        password: varchar("password").notNull()
+        password: varchar("password").notNull(),
+        loginType: varchar("loginType").notNull().default("doctor"),
     }
 )
 
@@ -22,5 +23,17 @@ export const Patients = pgTable("patients",
         problem: varchar("problem").notNull(),
         mobile: varchar("mobile").notNull().unique(),
         appointmentDate: date("appointmentDate").notNull(),
+    }
+)
+
+export const Medicos = pgTable("medicos",
+    {
+        id: serial("id").primaryKey(),
+        name: text("name").notNull(),
+        experience: integer("experience").notNull().default(0),
+        hospital: varchar("hospital").notNull(),
+        email: varchar("email").notNull().unique(),
+        password: varchar("password").notNull(),
+        loginType: varchar("loginType").notNull().default("medicos"),
     }
 )
