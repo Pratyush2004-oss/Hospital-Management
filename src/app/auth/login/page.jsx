@@ -5,6 +5,8 @@ import React, { useState } from 'react'
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { useStaffStore } from '@/store/staffStore';
+import { Loader } from 'lucide-react';
 
 const Login = () => {
     const [input, setInput] = useState({
@@ -12,6 +14,11 @@ const Login = () => {
         password: '',
         loginType: ''
     });
+    const {loading, staffLogin} = useStaffStore();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        staffLogin(input);
+    }
     return (
         <div className='flex items-center justify-between p-7 min-h-[85vh]'>
             <div className='grid w-full grid-cols-1 gap-5 mx-auto border-4 border-red-500 rounded-lg shadow-lg sm:w-1/2 p-7'>
@@ -40,7 +47,7 @@ const Login = () => {
                     </RadioGroup>
                 </div>
                 <div className='text-lg font-bold'>
-                    <Button variant='outline' className='w-full bg-red-300 rounded-full'>Login</Button>
+                    <Button variant='outline' onClick={handleSubmit} className='w-full bg-red-300 rounded-full'>{loading ? <Loader className='animate-spin'/> : 'Login'}</Button>
                     <h1 className='m-1 text-sm'>Don't have an account?<Link href={'/auth/register'} className='text-blue-500 underline'>Register</Link></h1>
                 </div>
             </div>

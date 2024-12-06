@@ -7,20 +7,21 @@ export const useStaffStore = create((set) => ({
     loading: false,
     error: null,
     staff: null,
-    navigate: false,
+    isCheckingStaff: false,
+    isAuthenticated: false,
 
     registerDoctor: async (input) => {
         try {
             set({ loading: true, error: null, navigate: false });
             if (!input.name || !input.email || !input.hospital || !input.experience || !input.specialization || !input.password) {
                 toast.error("Fill in all the fields")
-                return;
+                return false;
             }
 
             const user = await db.select().from(Doctors).where(eq(input.email, Doctors.email));
             if (user[0]) {
                 toast.error("User already exists..")
-                return;
+                return false;
             }
             const response = await db.insert(Doctors).values({
                 name: input.name,
@@ -32,7 +33,7 @@ export const useStaffStore = create((set) => ({
             })
             if (response) {
                 toast.success("Doctor account created successfully");
-                set({ error: null, navigate: true })
+                set({ error: null })
             }
         } catch (error) {
             toast.error("Error in creating account");
@@ -48,6 +49,7 @@ export const useStaffStore = create((set) => ({
             set({ loading: true, error: null, navigate: false });
             if (!input.name || !input.email || !input.hospital || !input.experience || !input.password) {
                 toast.error("Fill in all the fields")
+                set({ navigate: false })
                 return;
             }
             const user = await db.select().from(Medicos).where(eq(input.email, Medicos.email));
@@ -64,7 +66,7 @@ export const useStaffStore = create((set) => ({
             })
             if (response) {
                 toast.success("Medicos account created successfully");
-                set({ error: null, navigate: true })
+                set({ error: null })
             }
         }
         catch (error) {
@@ -88,21 +90,61 @@ export const useStaffStore = create((set) => ({
                 if (user[0]) {
                     if (user[0].password === input.password) {
                         toast.success("Login successful");
-                        set({ error: null })
+                        set({ error: null });
+                        localStorage.setItem('staff', JSON.stringify(user[0]))
+                        set({ error: null, staff: user[0] });
+
                     } else {
                         toast.error("Incorrect password");
                         set({ error: null })
+                        return;
                     }
+                }
+                else {
+                    toast.error("User does not exist");
+                    return;
                 }
             }
             else {
-
+                const user = await db.select().from(Medicos).where(eq(input.email, Medicos.email));
+                if (user[0]) {
+                    if (user[0].password === input.password) {
+                        toast.success("Login successful");
+                        localStorage.setItem('staff', JSON.stringify(user[0]))
+                        set({ error: null, staff: user[0] });
+                    }
+                    else {
+                        toast.error("Incorrect Password");
+                        set({ error: null })
+                        return;
+                    }
+                }
+                else {
+                    toast.error("User does not exist");
+                    return;
+                }
             }
         } catch (error) {
-
+            toast.error("Error Logging In");
+            set({ error: error });
         }
         finally {
             set({ loading: false })
         }
     },
+
+    checkStaff: () => {
+        set({ isCheckingStaff: true, error: null })
+        try {
+            if (staff) {
+                set({ staff: JSON.parse(staff), isAuthenticated: true })
+            }
+            else {
+                set({ staff: null })
+            }
+        } catch (error) {
+            set({ staff: null, error: error, isCheckingStaff: false })
+        }
+        const staff = localStorage.getItem('staff');
+    }
 }));

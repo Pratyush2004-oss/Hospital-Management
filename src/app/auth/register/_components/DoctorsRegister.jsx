@@ -13,11 +13,9 @@ import { specialization } from '@/config/Specialization';
 import Link from 'next/link';
 import { useStaffStore } from '@/store/staffStore';
 import { Loader2 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 
 const DoctorsRegister = () => {
-    const { loading, registerDoctor, navigate } = useStaffStore();
-    const router = useRouter();
+    const { loading, registerDoctor } = useStaffStore();
     const [input, setInput] = useState({
         name: '',
         experience: '',
@@ -30,7 +28,7 @@ const DoctorsRegister = () => {
 
     const handleRegister = async (e) => {
         e.preventDefault();
-        registerDoctor(input);
+        await registerDoctor(input);
         setInput({
             name: '',
             experience: '',
@@ -40,10 +38,6 @@ const DoctorsRegister = () => {
             specialization: '',
             password: ''
         })
-        await new Promise((resolve) => setTimeout(resolve, 2000))
-        if (navigate) {
-            router.push('/auth/login')
-        }
     }
     return (
         <div className='flex items-center justify-between min-h-[75vh] p-7'>

@@ -5,7 +5,6 @@ import { Label } from '@/components/ui/label';
 import Link from 'next/link';
 import { useStaffStore } from '@/store/staffStore';
 import { Loader2 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 const MedicosRegister = () => {
     const [input, setInput] = useState({
         name: '',
@@ -14,8 +13,7 @@ const MedicosRegister = () => {
         password: '',
         hospital: '',
     });
-    const router = useRouter();
-    const { loading, registerMedicos, navigate } = useStaffStore();
+    const { loading, registerMedicos } = useStaffStore();
     const handleRegister = async (e) => {
         e.preventDefault();
         registerMedicos(input);
@@ -26,10 +24,6 @@ const MedicosRegister = () => {
             password: '',
             hospital: '',
         });
-        await new Promise((resolve) => setTimeout(resolve, 2000))
-        if (navigate) {
-            router.push('/auth/login')
-        }
 
     }
     return (
