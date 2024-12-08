@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
   const { isCheckingStaff, checkStaff } = useStaffStore();
   useEffect(() => {
     checkStaff();
-  }, []);
+  }, [checkStaff]);
 
   if (isCheckingStaff) {
     return (
