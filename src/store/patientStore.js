@@ -1,5 +1,5 @@
 import { db } from "../config/index";
-import { Patients } from "../config/schema";
+import { Doctors, Medicos, Patients } from "../config/schema";
 import { eq } from "drizzle-orm";
 import { toast } from "sonner";
 import { create } from "zustand";
@@ -8,6 +8,8 @@ export const usePatientStore = create((set) => ({
     loading: false,
     error: null,
     doctors: [],
+    appointment: null,
+    medicos: [],
 
     bookAppointment: async (input) => {
         set({ loading: true, error: null });
@@ -17,7 +19,6 @@ export const usePatientStore = create((set) => ({
                 return;
             }
             const user = await db.select().from(Patients).where(eq(Patients.mobile, input.mobile));
-            console.log(user[0])
             if (user[0]) {
                 const response = await db.update(Patients).set({
                     name: input.name,
@@ -56,6 +57,60 @@ export const usePatientStore = create((set) => ({
 
     },
 
-    
-}
-));
+    viewAppointment: async (input) => {
+        set({ loading: true, error: null });
+        try {
+            const response = await db.select().from(Patients).where(eq(Patients.mobile, input));
+            if (response[0]) {
+                set({ loading: false, error: null, appointment: response[0] });
+            }
+            else {
+                toast.error("No Appointment Found");
+                set({ loading: false, error: null, appointment: null });
+            }
+        } catch (error) {
+            set({ loading: false, error: error.message });
+            toast.error("Error in fetching data");
+        }
+        finally {
+            set({ loading: false });
+        }
+    },
+
+    getDoctors: async () => {
+        set({ loading: true, error: null });
+        try {
+            const response = await db.select().from(Doctors);
+            if (response) {
+                set({ loading: false, error: null, doctors: response });
+            }
+            else {
+                set({ loading: false, error: null, doctors: [] });
+            }
+        } catch (error) {
+            set({ loading: false, error: error.message });
+        }
+        finally {
+            set({ loading: false });
+        }
+    },
+
+    getMedicos: async () => {
+        set({ loading: true, error: null });
+        try {
+            const response = await db.select().from(Medicos);
+            if (response) {
+                set({ loading: false, error: null, medicos: response });
+            }
+            else {
+                set({ loading: false, error: null, medicos: [] });
+            }
+        } catch (error) {
+            set({ loading: false, error: error.message });
+        }
+        finally {
+            set({ loading: false });
+        }
+    },
+
+}));

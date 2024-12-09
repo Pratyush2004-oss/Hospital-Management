@@ -27,10 +27,26 @@ const Navbar = () => {
                 <Link href={'/#appointment'} className='text-lg font-bold'>APPOINTMENT</Link>
                 {
                     staff && isAuthenticated ? (
-                        <Avatar>
-                            <AvatarImage src="/images/home-img.svg" />
-                            <AvatarFallback>HP</AvatarFallback>
-                        </Avatar>
+                        <DropdownMenu >
+                            <DropdownMenuTrigger>
+                                <Avatar>
+                                    <AvatarImage src="/images/home-img.svg" />
+                                    <AvatarFallback>HP</AvatarFallback>
+                                </Avatar>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent>
+                                <DropdownMenuLabel>
+                                    <Link href={'/dashboard'}>Dashboard</Link>
+                                </DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem>
+                                    <DropdownMenuItem>
+                                        <div className='flex items-center justify-start w-full gap-4 text-red-500 cursor-pointer' onClick={handleLogout}>Logout <LogOutIcon className='size-4' /></div>
+                                    </DropdownMenuItem>
+                                </DropdownMenuItem>
+
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                     ) : (
                         <Link href={'/auth/login'} className='text-lg font-bold text-blue-500 underline'>Login</Link>
                     )

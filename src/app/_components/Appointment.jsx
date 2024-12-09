@@ -13,6 +13,7 @@ import { Problem } from '@/config/Specialization'
 import { usePatientStore } from '@/store/patientStore'
 import { InfinityIcon } from 'lucide-react'
 import React, { useState } from 'react'
+import ViewAppointment from './ViewAppointment'
 
 const Appointment = () => {
     const [input, setInput] = useState({
@@ -94,13 +95,13 @@ const Appointment = () => {
                 </div>
 
                 <div className='md:col-span-2'>
-                    <Button disabled={loading} onClick={handleSubmit} className='w-full text-lg font-bold text-red-500 bg-transparent rounded-full' variant={'outline'} >
+                    <Button disabled={loading} onClick={handleSubmit} className='w-full text-lg font-bold text-red-500 bg-transparent border-2 border-red-500 rounded-full' variant={'outline'} >
                         {loading ? <InfinityIcon className='animate-pulse' /> : 'Book Appointment'}
                     </Button>
                 </div>
-
-
             </div>
+            {/* View Appointment */}
+            <ViewAppointment/>
         </div>
     )
 }
