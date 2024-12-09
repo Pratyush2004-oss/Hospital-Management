@@ -136,15 +136,26 @@ export const useStaffStore = create((set) => ({
     checkStaff: () => {
         set({ isCheckingStaff: true, error: null })
         try {
-            if (staff) {
-                set({ staff: JSON.parse(staff), isAuthenticated: true })
+            const response = localStorage.getItem('staff');
+            if (response) {
+                set({ staff: JSON.parse(response), isAuthenticated: true })
             }
             else {
-                set({ staff: null })
+                set({ staff: null, isAuthenticated: false })
             }
         } catch (error) {
             set({ staff: null, error: error, isCheckingStaff: false })
         }
-        const staff = localStorage.getItem('staff');
-    }
+        finally {
+            set({ isCheckingStaff: false })
+        }
+    },
+
+    logout: () => {
+        localStorage.removeItem('staff');
+        set({ staff: null, isAuthenticated: false })
+    },
+
+    
+
 }));

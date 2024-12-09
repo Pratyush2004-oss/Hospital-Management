@@ -8,12 +8,15 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Menu } from 'lucide-react'
+import { LogOutIcon, Menu } from 'lucide-react'
 import { useStaffStore } from '@/store/staffStore'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 const Navbar = () => {
-    const { staff } = useStaffStore();
+    const { staff, logout, isAuthenticated } = useStaffStore();
+    const handleLogout = () => {
+        logout();
+    }
     return (
         <nav className='sticky top-0 z-50 flex items-center justify-between p-4 bg-white '>
             <Link href={'/'} className='text-3xl font-extrabold'>Hospi<span className='text-red-500'>TAL</span></Link>
@@ -23,7 +26,7 @@ const Navbar = () => {
                 <Link href={'/#medicos'} className='text-lg font-bold'>MEDICOS</Link>
                 <Link href={'/#appointment'} className='text-lg font-bold'>APPOINTMENT</Link>
                 {
-                    staff ? (
+                    staff && isAuthenticated ? (
                         <Avatar>
                             <AvatarImage src="/images/home-img.svg" />
                             <AvatarFallback>HP</AvatarFallback>
@@ -47,7 +50,7 @@ const Navbar = () => {
                     }</DropdownMenuTrigger>
                     <DropdownMenuContent className='md:hidden'>
                         {
-                            staff ? (
+                            staff && isAuthenticated ? (
                                 <DropdownMenuLabel>
                                     <Link href={'/dashboard'}>Dashboard</Link>
                                 </DropdownMenuLabel>
@@ -70,6 +73,13 @@ const Navbar = () => {
                         <DropdownMenuItem>
                             <Link href={'/#appointment'}>APPOINTMENT</Link>
                         </DropdownMenuItem>
+                        {
+                            staff && isAuthenticated && (
+                                <DropdownMenuItem>
+                                    <div className='flex items-center justify-start w-full gap-4 text-red-500 cursor-pointer' onClick={handleLogout}>Logout <LogOutIcon className='size-4' /></div>
+                                </DropdownMenuItem>
+                            )
+                        }
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
