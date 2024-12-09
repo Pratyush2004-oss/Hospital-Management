@@ -11,11 +11,14 @@ import {
 import { LogOutIcon, Menu } from 'lucide-react'
 import { useStaffStore } from '@/store/staffStore'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { useRouter } from 'next/navigation'
 
 const Navbar = () => {
+    const router = useRouter();
     const { staff, logout, isAuthenticated } = useStaffStore();
     const handleLogout = () => {
         logout();
+        router.push('/');
     }
     return (
         <nav className='sticky top-0 z-50 flex items-center justify-between p-4 bg-white '>

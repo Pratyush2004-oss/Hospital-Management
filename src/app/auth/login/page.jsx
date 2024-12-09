@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { useStaffStore } from '@/store/staffStore';
 import { Loader } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 const Login = () => {
     const [input, setInput] = useState({
@@ -14,10 +15,18 @@ const Login = () => {
         password: '',
         loginType: ''
     });
-    const {loading, staffLogin} = useStaffStore();
+    const { loading, staffLogin } = useStaffStore();
+    const router = useRouter();
     const handleSubmit = async (e) => {
         e.preventDefault();
         staffLogin(input);
+        setInput({
+            email: '',
+            password: '',
+            loginType: ''
+        })
+        router.push('/dashboard');
+
     }
     return (
         <div className='flex items-center justify-between p-7 min-h-[85vh]'>
@@ -47,7 +56,7 @@ const Login = () => {
                     </RadioGroup>
                 </div>
                 <div className='text-lg font-bold'>
-                    <Button variant='outline' onClick={handleSubmit} className='w-full bg-red-300 rounded-full'>{loading ? <Loader className='animate-spin'/> : 'Login'}</Button>
+                    <Button variant='outline' onClick={handleSubmit} className='w-full bg-red-300 rounded-full'>{loading ? <Loader className='animate-spin' /> : 'Login'}</Button>
                     <h1 className='m-1 text-sm'>Don't have an account?<Link href={'/auth/register'} className='text-blue-500 underline'>Register</Link></h1>
                 </div>
             </div>
