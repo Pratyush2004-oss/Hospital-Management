@@ -1,5 +1,5 @@
 import { db } from "@/config";
-import { Doctors, Medicos } from "@/config/schema";
+import { Doctors, Medicos, Patients } from "@/config/schema";
 import { eq } from "drizzle-orm";
 import { toast } from "sonner";
 import { create } from "zustand";
@@ -9,6 +9,7 @@ export const useStaffStore = create((set) => ({
     staff: null,
     isCheckingStaff: false,
     isAuthenticated: false,
+    patients: [],
 
     registerDoctor: async (input) => {
         try {
@@ -156,6 +157,24 @@ export const useStaffStore = create((set) => ({
         set({ staff: null, isAuthenticated: false })
     },
 
-    
+    getPatients: async () => {
+        set({ loading: true, error: null });
+        try {
+            const today = new Date();
+            const response = await db.select().from(Patients).where(eq(Patients.appointmentDate, today));
+            if (response) {
+                set({ loading: false, error: null, patients: response });
+            }
+            else {
+                set({ loading: false, error: null, patients: [] });
+            }
+        } catch (error) {
+            set({ loading: false, error: error.message });
+        }
+        finally {
+            set({ loading: false });
+        }
+    }
+
 
 }));

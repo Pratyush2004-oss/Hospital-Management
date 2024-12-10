@@ -1,40 +1,10 @@
-import { LibraryBig, LineChart, MessagesSquare, Shield } from 'lucide-react'
 import { usePathname } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Link from 'next/link';
+import { MenuList } from '@/config/Specialization';
 function Sidebar() {
-    const MenuList = [
-        {
-            id: 1,
-            name: 'My Forms',
-            icon: LibraryBig,
-            path: '/dashboard'
-        },
-        {
-            id: 2,
-            name: 'Responses',
-            icon: MessagesSquare,
-            path: '/dashboard/responses'
-        },
-        {
-            id: 3,
-            name: 'Analytics',
-            icon: LineChart,
-            path: '/dashboard/analytics'
-        },
-        {
-            id: 4,
-            name: 'Upgrade',
-            icon: Shield,
-            path: '/dashboard/upgrade'
-        },
-    ]
-
-    const [formList, setFormList] = useState();
+    
     const path = usePathname();
-    
-
-    
 
     return (
         <div>

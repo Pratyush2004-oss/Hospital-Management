@@ -28,7 +28,7 @@ const ProtectRoute = ({ children }) => {
   const path = usePathname();
   const { staff } = useStaffStore();
   if (path.includes('/dashboard') && !staff) {
-    return redirect('/');
+    return redirect('/auth/login');
   }
   if (path.includes('/auth') && staff) {
     redirect('/dashboard');

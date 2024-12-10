@@ -1,3 +1,5 @@
+import { LibraryBig, LineChart, MessagesSquare, Shield } from "lucide-react"
+
 export const specialization = [
     {
         id: 1,
@@ -92,4 +94,31 @@ export const Problem = [
     'Asthma',
     'Heart Disease',
     'Kidney Disease',
+]
+
+export const MenuList = [
+    {
+        id: 1,
+        name: 'Today\'s Appointments',
+        icon: LibraryBig,
+        path: '/dashboard'
+    },
+    {
+        id: 2,
+        name: 'Appointed Patients',
+        icon: MessagesSquare,
+        path: '/dashboard/appointed'
+    },
+    {
+        id: 3,
+        name: 'Analytics',
+        icon: LineChart,
+        path: '/dashboard/analytics'
+    },
+    {
+        id: 4,
+        name: 'Recommended for Surgery',
+        icon: Shield,
+        path: '/dashboard/surgeries'
+    },
 ]
