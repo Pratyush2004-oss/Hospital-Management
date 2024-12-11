@@ -11,13 +11,19 @@ import {
 } from "@/components/ui/table"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { useStaffStore } from '@/store/staffStore'
-
+import { useRouter } from 'next/navigation'
 
 const page = () => {
-  const { getPatients, patients } = useStaffStore();
+  const { getPatients, patients, staff, getCheckedPatients } = useStaffStore();
+  const router = useRouter();
   useEffect(() => {
-    getPatients();
-  }, [getPatients])
+    if (staff && staff.loginType === 'doctor') {
+      getPatients();
+    }
+    else {
+      getCheckedPatients();
+    }
+  }, [staff]);
   return (
     <ScrollArea>
       <div className='p-5'>
@@ -35,7 +41,7 @@ const page = () => {
           <TableBody>
             {
               patients && patients.map((patient, idx) => (
-                <TableRow key={idx} className='cursor-pointer'>
+                <TableRow key={idx} className='cursor-pointer' onClick={() => router.push(`dashboard/patients/${patient.id}`)}>
                   <TableCell className="font-medium">{idx + 1}</TableCell>
                   <TableCell>{patient.name}</TableCell>
                   <TableCell>{patient.age}</TableCell>

@@ -54,7 +54,6 @@ export default function RootLayout({ children }) {
       >
         <Navbar />
         <ProtectRoute>
-
           {children}
           <Toaster />
         </ProtectRoute>

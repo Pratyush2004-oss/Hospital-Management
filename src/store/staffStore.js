@@ -1,6 +1,6 @@
 import { db } from "@/config";
 import { Doctors, Medicos, Patients } from "@/config/schema";
-import { eq } from "drizzle-orm";
+import { eq, ne } from "drizzle-orm";
 import { toast } from "sonner";
 import { create } from "zustand";
 export const useStaffStore = create((set) => ({
@@ -10,6 +10,7 @@ export const useStaffStore = create((set) => ({
     isCheckingStaff: false,
     isAuthenticated: false,
     patients: [],
+    patient: null,
 
     registerDoctor: async (input) => {
         try {
@@ -174,7 +175,45 @@ export const useStaffStore = create((set) => ({
         finally {
             set({ loading: false });
         }
-    }
+    },
 
+    getPatientbyId: async (id) => {
+        set({ loading: true, error: null });
+        try {
+            const response = await db.select().from(Patients).where(eq(Patients.id, id));
+            if (response[0]) {
+                console.log(response[0])
+                set({ loading: false, error: null, patient: response[0] });
+            }
+            else {
+                set({ loading: false, error: null, patient: null });
+            }
+        } catch (error) {
+            set({ loading: false, error: error.message });
+        }
+        finally {
+            set({ loading: false });
+        }
+    },
+
+    getCheckedPatients: async () => {
+        set({ loading: true, error: null });
+        try {
+            const response = await db.select().from(Patients).where(ne(Patients.medicines, null));
+            if (response) {
+                set({ loading: false, error: null, patients: response });
+            }
+            else {
+                set({ loading: false, error: null, patients: [] });
+            }
+        } catch (error) {
+            set({ loading: false, error: error.message });
+        }
+        finally {
+            set({ loading: false });
+        }
+    },
+
+    
 
 }));

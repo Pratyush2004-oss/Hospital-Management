@@ -63,7 +63,7 @@ const page = () => {
           {
             specialization.map((specialization, idx) => (
               <div key={idx} className='flex flex-wrap items-center p-4 transition-all duration-150 border-2 border-red-500 rounded-lg cursor-pointer hover:text-white hover:scale-105 hover:bg-red-300'>
-                <h1 className='flex gap-5 font-serif text-2xl font-bold '><Library /> {specialization.value}</h1>
+                <h1 className='flex gap-5 font-mono text-xl font-bold '><Library /> {specialization.value}</h1>
               </div>
             ))
           }

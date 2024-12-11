@@ -23,6 +23,7 @@ export const Patients = pgTable("patients",
         problem: varchar("problem").notNull(),
         mobile: varchar("mobile").notNull().unique(),
         appointmentDate: date("appointmentDate").notNull(),
+        medicines: varchar("medicines"),
     }
 )
 
