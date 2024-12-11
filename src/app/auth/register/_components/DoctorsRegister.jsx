@@ -23,6 +23,7 @@ const DoctorsRegister = () => {
         password: '',
         hospital: '',
         specialization: '',
+        city: '',
         password: ''
     });
 
@@ -36,6 +37,7 @@ const DoctorsRegister = () => {
             password: '',
             hospital: '',
             specialization: '',
+            city: '',
             password: ''
         })
     }
@@ -54,10 +56,22 @@ const DoctorsRegister = () => {
                     <Input type='number' placeholder='Experience' value={input.experience} onChange={(e) => setInput({ ...input, experience: e.target.value })} />
                 </div>
                 <div className='text-lg font-bold'>
-                    <Label>Email</Label>
-                    <Input placeholder='Email' type='email' value={input.email} onChange={(e) => setInput({ ...input, email: e.target.value })} />
-                </div>
-                <div className='text-lg font-bold'>
+                <Label>Hospital</Label>
+                    <Input placeholder='Hospital' value={input.hospital} onChange={(e) => setInput({ ...input, hospital: e.target.value })} />
+                    </div>
+                    <div className='text-lg font-bold'>
+                    <Label>City</Label>
+                    <Input placeholder='City' value={input.city} onChange={(e) => setInput({ ...input, city: e.target.value })} />
+                    </div>
+                    <div className='text-lg font-bold'>
+                        <Label>Email</Label>
+                        <Input placeholder='Email' type='email' value={input.email} onChange={(e) => setInput({ ...input, email: e.target.value })} />
+                    </div>
+                    <div className='text-lg font-bold'>
+                    <Label>Password</Label>
+                    <Input placeholder='Password' type='password' value={input.password} onChange={(e) => setInput({ ...input, password: e.target.value })} />
+                    </div>
+                <div className='text-lg font-bold md:col-span-2'>
                     <Label>Specialization</Label>
                     <Select onValueChange={(e) => setInput({ ...input, specialization: e })}>
                         <SelectTrigger className="">
@@ -70,14 +84,7 @@ const DoctorsRegister = () => {
                                 ))
                             }
                         </SelectContent>
-                    </Select>                </div>
-                <div className='text-lg font-bold'>
-                    <Label>Hospital</Label>
-                    <Input placeholder='Hospital' value={input.hospital} onChange={(e) => setInput({ ...input, hospital: e.target.value })} />
-                </div>
-                <div className='text-lg font-bold'>
-                    <Label>Password</Label>
-                    <Input placeholder='Password' type='password' value={input.password} onChange={(e) => setInput({ ...input, password: e.target.value })} />
+                    </Select>
                 </div>
                 <div className='text-lg font-bold md:col-span-2'>
                     <Button variant='outline' onClick={handleRegister} className='w-full bg-red-300 rounded-full'>{

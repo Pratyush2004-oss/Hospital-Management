@@ -21,6 +21,7 @@ const Appointment = () => {
         age: '',
         gender: '',
         address: '',
+        hospital:'',
         problem: '',
         mobile: '',
         appointmentDate: ''
@@ -38,6 +39,7 @@ const Appointment = () => {
             address: '',
             problem: '',
             mobile: '',
+            hospital:'',
             appointmentDate: ''
         })
     }
@@ -67,8 +69,12 @@ const Appointment = () => {
                     </RadioGroup>
                 </div>
                 <div className='font-bold'>
-                    <Label className='font-bold'>Address</Label>
-                    <Input placeholder='Address' required value={input.address} onChange={(e) => setInput({ ...input, address: e.target.value })} />
+                    <Label className='font-bold'>Hospital</Label>
+                    <Input placeholder='Hospital' required value={input.hospital} onChange={(e) => setInput({ ...input, hospital: e.target.value })} />
+                </div>
+                <div className='font-bold'>
+                    <Label className='font-bold'>City</Label>
+                    <Input placeholder='Enter City' required value={input.address} onChange={(e) => setInput({ ...input, address: e.target.value })} />
                 </div>
                 <div className='font-bold'>
                     <Label className='font-bold'>Problem</Label>

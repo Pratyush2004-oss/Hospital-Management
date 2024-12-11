@@ -10,6 +10,7 @@ export const Doctors = pgTable("doctors",
         email: varchar("email").notNull().unique(),
         password: varchar("password").notNull(),
         loginType: varchar("loginType").notNull().default("doctor"),
+        city: varchar("city").notNull(),
     }
 )
 
@@ -24,6 +25,7 @@ export const Patients = pgTable("patients",
         mobile: varchar("mobile").notNull().unique(),
         appointmentDate: date("appointmentDate").notNull(),
         medicines: varchar("medicines"),
+        hospital: varchar('hospital').notNull()
     }
 )
 
@@ -33,6 +35,7 @@ export const Medicos = pgTable("medicos",
         name: text("name").notNull(),
         experience: integer("experience").notNull().default(0),
         hospital: varchar("hospital").notNull(),
+        city:varchar("city").notNull(),
         email: varchar("email").notNull().unique(),
         password: varchar("password").notNull(),
         loginType: varchar("loginType").notNull().default("medicos"),

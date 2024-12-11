@@ -12,6 +12,7 @@ const MedicosRegister = () => {
         email: '',
         password: '',
         hospital: '',
+        city:''
     });
     const { loading, registerMedicos } = useStaffStore();
     const handleRegister = async (e) => {
@@ -23,6 +24,7 @@ const MedicosRegister = () => {
             email: '',
             password: '',
             hospital: '',
+            city:'',
         });
 
     }
@@ -47,6 +49,10 @@ const MedicosRegister = () => {
                 <div className='text-lg font-bold'>
                     <Label>Hospital</Label>
                     <Input placeholder='Hospital' value={input.hospital} onChange={(e) => setInput({ ...input, hospital: e.target.value })} />
+                </div>
+                <div className='text-lg font-bold'>
+                    <Label>City</Label>
+                    <Input placeholder='City' value={input.city} onChange={(e) => setInput({ ...input, city: e.target.value })} />
                 </div>
                 <div className='text-lg font-bold'>
                     <Label>Password</Label>

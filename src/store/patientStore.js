@@ -14,7 +14,7 @@ export const usePatientStore = create((set) => ({
     bookAppointment: async (input) => {
         set({ loading: true, error: null });
         try {
-            if (!input.name || !input.age || !input.gender || !input.address || !input.problem || !input.mobile || !input.appointmentDate) {
+            if (!input.name || !input.age || !input.gender || !input.address || !input.problem || !input.mobile || !input.appointmentDate || !input.hospital) {
                 toast.error("Please fill all the fields");
                 return;
             }
@@ -25,6 +25,7 @@ export const usePatientStore = create((set) => ({
                     age: input.age,
                     gender: input.gender,
                     address: input.address,
+                    hospital: input.hospital,
                     problem: input.problem,
                     mobile: input.mobile,
                     appointmentDate: input.appointmentDate
@@ -41,6 +42,7 @@ export const usePatientStore = create((set) => ({
                     address: input.address,
                     problem: input.problem,
                     mobile: input.mobile,
+                    hospital: input.hospital,
                     appointmentDate: input.appointmentDate
                 });
                 if (response) {

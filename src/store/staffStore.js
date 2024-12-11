@@ -1,9 +1,9 @@
 import { db } from "@/config";
 import { Doctors, Medicos, Patients } from "@/config/schema";
-import { eq, ne } from "drizzle-orm";
+import { and, eq, ne } from "drizzle-orm";
 import { toast } from "sonner";
 import { create } from "zustand";
-export const useStaffStore = create((set) => ({
+export const useStaffStore = create((set, get) => ({
     loading: false,
     error: null,
     staff: null,
@@ -15,7 +15,7 @@ export const useStaffStore = create((set) => ({
     registerDoctor: async (input) => {
         try {
             set({ loading: true, error: null, navigate: false });
-            if (!input.name || !input.email || !input.hospital || !input.experience || !input.specialization || !input.password) {
+            if (!input.name || !input.email || !input.hospital || !input.experience || !input.specialization || !input.password || !input.city) {
                 toast.error("Fill in all the fields")
                 return false;
             }
@@ -28,6 +28,7 @@ export const useStaffStore = create((set) => ({
             const response = await db.insert(Doctors).values({
                 name: input.name,
                 hospital: input.hospital,
+                city: input.city,
                 email: input.email,
                 experience: input.experience,
                 specialization: input.specialization,
@@ -35,7 +36,7 @@ export const useStaffStore = create((set) => ({
             })
             if (response) {
                 toast.success("Doctor account created successfully");
-                set({ error: null })
+                set({ error: null, staff: response[0] })
             }
         } catch (error) {
             toast.error("Error in creating account");
@@ -64,7 +65,8 @@ export const useStaffStore = create((set) => ({
                 hospital: input.hospital,
                 email: input.email,
                 experience: input.experience,
-                password: input.password
+                password: input.password,
+                city: input.city
             })
             if (response) {
                 toast.success("Medicos account created successfully");
@@ -162,7 +164,7 @@ export const useStaffStore = create((set) => ({
         set({ loading: true, error: null });
         try {
             const today = new Date();
-            const response = await db.select().from(Patients).where(eq(Patients.appointmentDate, today));
+            const response = await db.select().from(Patients).where(and(eq(Patients.appointmentDate, today),eq(Patients.address, get().staff.city), eq(Patients.hospital, get().staff.hospital)));
             if (response) {
                 set({ loading: false, error: null, patients: response });
             }
@@ -214,6 +216,6 @@ export const useStaffStore = create((set) => ({
         }
     },
 
-    
+
 
 }));
