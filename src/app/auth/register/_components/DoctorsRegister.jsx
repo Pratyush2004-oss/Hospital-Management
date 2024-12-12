@@ -75,7 +75,7 @@ const DoctorsRegister = () => {
                     <Label>Specialization</Label>
                     <Select onValueChange={(e) => setInput({ ...input, specialization: e })}>
                         <SelectTrigger className="">
-                            <SelectValue placeholder="Specializition" />
+                            <SelectValue value='' placeholder="Specializition" />
                         </SelectTrigger>
                         <SelectContent>
                             {

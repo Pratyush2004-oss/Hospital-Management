@@ -27,8 +27,8 @@ export const useStaffStore = create((set, get) => ({
             }
             const response = await db.insert(Doctors).values({
                 name: input.name,
-                hospital: input.hospital.toLowerCase(),
-                city: input.city.toLowerCase(),
+                hospital: input.hospital,
+                city: input.city,
                 email: input.email,
                 experience: input.experience,
                 specialization: input.specialization,
@@ -62,11 +62,11 @@ export const useStaffStore = create((set, get) => ({
             }
             const response = await db.insert(Medicos).values({
                 name: input.name,
-                hospital: input.hospital.toLowerCase(),
+                hospital: input.hospital,
                 email: input.email,
                 experience: input.experience,
                 password: input.password,
-                city: input.city.toLowerCase()
+                city: input.city
             })
             if (response) {
                 toast.success("Medicos account created successfully");
@@ -184,7 +184,6 @@ export const useStaffStore = create((set, get) => ({
         try {
             const response = await db.select().from(Patients).where(eq(Patients.id, id));
             if (response[0]) {
-                console.log(response[0])
                 set({ loading: false, error: null, patient: response[0] });
             }
             else {

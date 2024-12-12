@@ -80,7 +80,7 @@ const Appointment = () => {
                     <Label className='font-bold'>Problem</Label>
                     <Select onValueChange={(e) => setInput({ ...input, problem: e })}>
                         <SelectTrigger className="">
-                            <SelectValue placeholder="Problem" />
+                            <SelectValue value='' placeholder="Problem" />
                         </SelectTrigger>
                         <SelectContent>
                             {

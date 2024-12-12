@@ -44,7 +44,7 @@ const ViewAppointment = () => {
                             <DialogHeader className={'my-3'}>
                                 <DialogTitle>Apoointment Details</DialogTitle>
                                 <DialogDescription>
-                                    Get your appointment details
+                          s          Get your appointment details
                                 </DialogDescription>
                             </DialogHeader>
                             <div>
@@ -54,7 +54,7 @@ const ViewAppointment = () => {
                                 <h1 className='text-sm font-bold bold'>Date: {appointment.appointmentDate}</h1>
                             </div>
                             <div className='grid grid-cols-2 gap-2 text-sm border-b-2'>
-                                <div className='flex items-center justify-center gap-1 max-lg:col-span-2'>Name : <span className='font-bold'>{appointment.name}</span></div>
+                                <div className='flex items-center justify-center col-span-2 gap-1'>Name : <span className='font-bold'>{appointment.name}</span></div>
                                 <div className='flex items-center justify-center gap-1'>Age : <span className='font-bold'>{appointment.age}</span></div>
                                 <div className='flex items-center justify-center gap-1'>Gender : <span className='font-bold'>{appointment.gender}</span></div>
                             </div>

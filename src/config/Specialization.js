@@ -122,3 +122,11 @@ export const MenuList = [
         path: '/dashboard/surgeries'
     },
 ]
+
+export const consumption = [
+    "Twice a day: Morning-Evening",
+    "Once a day",
+    "Morning",
+    "Night",
+    "Empty Stomach",
+]
