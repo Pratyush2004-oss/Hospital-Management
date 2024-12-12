@@ -28,6 +28,14 @@ const page = () => {
             <div className='my-4'>
                 <h1 className='font-serif text-xl font-bold underline lg:text-2xl'>Suggested Medicines</h1>
             </div>
+            {
+                patient.medicines ? (
+                    <div></div>
+                ) : (
+                    <div>No Medicines prescribed yet</div>
+                )
+            }
+            <div></div>
 
 
         </div>

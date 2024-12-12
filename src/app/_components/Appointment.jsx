@@ -53,7 +53,7 @@ const Appointment = () => {
                 </div>
                 <div className='font-bold'>
                     <Label className='font-bold'>Age</Label>
-                    <Input placeholder='Age' required min={0} type='number' value={input.age} onChange={(e) => setInput({ ...input, age: e.target.value })} />
+                    <Input placeholder='Age' required min={0}  type='number' value={input.age} onChange={(e) => setInput({ ...input, age: e.target.value })} />
                 </div>
                 <div className='font-bold'>
                     <Label className='font-bold'>Gender</Label>
@@ -70,11 +70,11 @@ const Appointment = () => {
                 </div>
                 <div className='font-bold'>
                     <Label className='font-bold'>Hospital</Label>
-                    <Input placeholder='Hospital' required value={input.hospital} onChange={(e) => setInput({ ...input, hospital: e.target.value })} />
+                    <Input placeholder='Hospital' required value={input.hospital.toUpperCase()} onChange={(e) => setInput({ ...input, hospital: e.target.value.toUpperCase() })} />
                 </div>
                 <div className='font-bold'>
                     <Label className='font-bold'>City</Label>
-                    <Input placeholder='Enter City' required value={input.address} onChange={(e) => setInput({ ...input, address: e.target.value })} />
+                    <Input placeholder='Enter City' required value={input.address.toUpperCase()} onChange={(e) => setInput({ ...input, address: e.target.value.toUpperCase() })} />
                 </div>
                 <div className='font-bold'>
                     <Label className='font-bold'>Problem</Label>

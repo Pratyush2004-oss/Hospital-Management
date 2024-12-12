@@ -1,4 +1,4 @@
-import { date, integer, pgTable, serial, text, varchar } from "drizzle-orm/pg-core";
+import { boolean, date, integer, pgTable, serial, text, varchar } from "drizzle-orm/pg-core";
 
 export const Doctors = pgTable("doctors",
     {
@@ -25,7 +25,8 @@ export const Patients = pgTable("patients",
         mobile: varchar("mobile").notNull().unique(),
         appointmentDate: date("appointmentDate").notNull(),
         medicines: varchar("medicines"),
-        hospital: varchar('hospital').notNull()
+        hospital: varchar('hospital').notNull(),
+        isAppointed: boolean("isAppointed").notNull().default(false)
     }
 )
 

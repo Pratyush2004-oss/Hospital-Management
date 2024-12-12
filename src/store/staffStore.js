@@ -27,8 +27,8 @@ export const useStaffStore = create((set, get) => ({
             }
             const response = await db.insert(Doctors).values({
                 name: input.name,
-                hospital: input.hospital,
-                city: input.city,
+                hospital: input.hospital.toLowerCase(),
+                city: input.city.toLowerCase(),
                 email: input.email,
                 experience: input.experience,
                 specialization: input.specialization,
@@ -50,7 +50,7 @@ export const useStaffStore = create((set, get) => ({
     registerMedicos: async (input) => {
         try {
             set({ loading: true, error: null, navigate: false });
-            if (!input.name || !input.email || !input.hospital || !input.experience || !input.password) {
+            if (!input.name || !input.email || !input.hospital || !input.experience || !input.password || !input.city) {
                 toast.error("Fill in all the fields")
                 set({ navigate: false })
                 return;
@@ -62,11 +62,11 @@ export const useStaffStore = create((set, get) => ({
             }
             const response = await db.insert(Medicos).values({
                 name: input.name,
-                hospital: input.hospital,
+                hospital: input.hospital.toLowerCase(),
                 email: input.email,
                 experience: input.experience,
                 password: input.password,
-                city: input.city
+                city: input.city.toLowerCase()
             })
             if (response) {
                 toast.success("Medicos account created successfully");
@@ -164,7 +164,7 @@ export const useStaffStore = create((set, get) => ({
         set({ loading: true, error: null });
         try {
             const today = new Date();
-            const response = await db.select().from(Patients).where(and(eq(Patients.appointmentDate, today),eq(Patients.address, get().staff.city), eq(Patients.hospital, get().staff.hospital)));
+            const response = await db.select().from(Patients).where(and(eq(Patients.appointmentDate, today), eq(Patients.address, get().staff.city), eq(Patients.hospital, get().staff.hospital)));
             if (response) {
                 set({ loading: false, error: null, patients: response });
             }

@@ -41,18 +41,34 @@ const ViewAppointment = () => {
                 appointment && !loading && (
                     <Dialog open={openDialog} asChild>
                         <DialogContent>
-                            <DialogHeader>
-                                <DialogTitle className='my-5'>Apoointment Details</DialogTitle>
-                                <DialogDescription className='gap-5 sm:grid-cols-2 sm:grid'>
-                                    <span className='font-bold'>Name:</span> {appointment.name}<br />
-                                    <span className='font-bold'>Age:</span> {appointment.age}<br />
-                                    <span className='font-bold'>Gender:</span> {appointment.gender}<br />
-                                    <span className='font-bold'>Address:</span> {appointment.address}<br />
-                                    <span className='font-bold'>Problem:</span> {appointment.problem}<br />
-                                    <span className='font-bold'>Mobile:</span> {appointment.mobile}<br />
-                                    <span className='font-bold'>Appointment Date:</span> {appointment.appointmentDate}<br />
+                            <DialogHeader className={'my-3'}>
+                                <DialogTitle>Apoointment Details</DialogTitle>
+                                <DialogDescription>
+                                    Get your appointment details
                                 </DialogDescription>
                             </DialogHeader>
+                            <div>
+                                <h1 className='font-serif font-bold text-center border-b-4 border-red-500'>{appointment.hospital} HOSPITAL, {appointment.address}</h1>
+                            </div>
+                            <div>
+                                <h1 className='text-sm font-bold bold'>Date: {appointment.appointmentDate}</h1>
+                            </div>
+                            <div className='grid grid-cols-2 gap-2 text-sm border-b-2'>
+                                <div className='flex items-center justify-center gap-1 max-lg:col-span-2'>Name : <span className='font-bold'>{appointment.name}</span></div>
+                                <div className='flex items-center justify-center gap-1'>Age : <span className='font-bold'>{appointment.age}</span></div>
+                                <div className='flex items-center justify-center gap-1'>Gender : <span className='font-bold'>{appointment.gender}</span></div>
+                            </div>
+                            <div>
+                                <h1 className='font-serif font-bold'>Suggested Medicines</h1>
+                            </div>
+                            {
+                                appointment.medicines ? (
+                                    <div></div>
+                                ) : (
+                                    <div>No Medicines prescribed yet</div>
+                                )
+                            }
+
                             <DialogFooter className={'my-3'}>
                                 <Button onClick={() => setOpenDialog(false)} className='rounded-full' variant='outline'>Close</Button>
                             </DialogFooter>
