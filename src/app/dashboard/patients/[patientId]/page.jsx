@@ -13,11 +13,7 @@ const page = () => {
     useEffect(() => {
         getPatientbyId(patientId)
     }, [getPatientbyId])
-    const [medicines, setMedicines] = useState([{
-        medicine: "",
-        consumption: '',
-        days: ''
-    }]);
+    const [medicines, setMedicines] = useState([]);
     return patient && (
         <div className='p-5 lg:p-10 lg:mx-8 max-w-7xl min-h-[75vh] lg:min-h-[80vh] relative'>
             <div className='flex items-center justify-center pb-2 border-b-4 border-red-500'>
