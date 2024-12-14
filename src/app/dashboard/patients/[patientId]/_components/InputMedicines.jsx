@@ -19,13 +19,11 @@ const InputMedicines = ({ medicines, setMedicines }) => {
         days: ''
     })
     const handlePush = (e) => {
-        e.preventDefault();
         if (!input.medicine || !input.consumption || !input.days) {
             toast.error("Fill all the fields");
             return;
         }
-        setMedicines(medicines)
-        console.log(medicines)
+        setMedicines([...medicines, { medicine: input.medicine, consumption: input.consumption, days: input.days }])
 
         setInput({
             medicine: '',

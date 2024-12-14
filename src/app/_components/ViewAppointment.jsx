@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     Dialog,
     DialogContent,
@@ -16,12 +16,18 @@ import LoadingSpinner from './LoadingSpinner';
 const ViewAppointment = () => {
     const [input, setInput] = useState('');
     const [openDialog, setOpenDialog] = useState(false);
-    const { viewAppointment, loading, appointment, deleteAppointment } = usePatientStore();
+    const { viewAppointment, loading, appointment } = usePatientStore();
     const handleSubmit = () => {
         setOpenDialog(true);
         viewAppointment(input);
         setInput('');
     }
+    const [medicines, setMedicines] = useState([]);
+    useEffect(() => {
+        if (appointment && appointment.medicines) {
+            setMedicines(JSON.parse(appointment.medicines));
+        }
+    }, [appointment])
     return (
         <div>
             <h1 className='font-serif text-xl font-extrabold'>View Appointment</h1>
@@ -44,7 +50,7 @@ const ViewAppointment = () => {
                             <DialogHeader className={'my-3'}>
                                 <DialogTitle>Apoointment Details</DialogTitle>
                                 <DialogDescription>
-                          s          Get your appointment details
+                                    Get your appointment details
                                 </DialogDescription>
                             </DialogHeader>
                             <div>
@@ -61,13 +67,16 @@ const ViewAppointment = () => {
                             <div>
                                 <h1 className='font-serif font-bold'>Suggested Medicines</h1>
                             </div>
-                            {
-                                appointment.medicines ? (
-                                    <div></div>
-                                ) : (
-                                    <div>No Medicines prescribed yet</div>
-                                )
-                            }
+                            <ul>
+                                {
+                                    medicines.length > 0 ? medicines.map((item, idx) => (
+                                        <li key={idx} className='mx-5 list-disc'><span className='font-mono text-lg font-bold'>{item.medicine}</span> - {item.consumption} - {item.days} days </li>
+                                    ))
+                                        : (
+                                            <div>No Medicines prescribed yet</div>
+                                        )
+                                }
+                            </ul>
 
                             <DialogFooter className={'my-3'}>
                                 <Button onClick={() => setOpenDialog(false)} className='rounded-full' variant='outline'>Close</Button>

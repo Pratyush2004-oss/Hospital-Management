@@ -215,6 +215,27 @@ export const useStaffStore = create((set, get) => ({
         }
     },
 
+    appointPatient: async (input, patientId) => {
+        set({ loading: true, error: null });
+        try {
+            const response = await db.update(Patients).set({ medicines: input, isAppointed: true }).where(eq(Patients.id, patientId));
+            if (response) {
+                set({ loading: false, error: null });
+                toast.success("Patient has been appointed successfully");
+            }
+            else {
+                set({ loading: false, error: null });
+                toast.error("Error in appointing patient");
+            }
+        } catch (error) {
+            set({ loading: false, error: error.message });
+            toast.error("Error in appointing patient");
+        }
+        finally {
+            set({ loading: false });
+        }
+    }
+
 
 
 }));
