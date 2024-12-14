@@ -28,8 +28,12 @@ const ViewAppointment = () => {
             setMedicines(JSON.parse(appointment.medicines));
         }
     }, [appointment])
+
+    const HandleDownload = () => {
+        window.print();
+    }
     return (
-        <div>
+        <div id='no-print'>
             <h1 className='font-serif text-xl font-extrabold'>View Appointment</h1>
             <div className='flex flex-wrap items-center justify-center gap-5'>
                 <Input placeholder='Mobile Number' value={input} onChange={(e) => setInput(e.target.value)} className='w-1/3' />
@@ -47,13 +51,13 @@ const ViewAppointment = () => {
                 appointment && !loading && (
                     <Dialog open={openDialog} asChild>
                         <DialogContent>
-                            <DialogHeader className={'my-3'}>
+                            <DialogHeader className={'my-3'} id='no-print'>
                                 <DialogTitle>Apoointment Details</DialogTitle>
                                 <DialogDescription>
                                     Get your appointment details
                                 </DialogDescription>
                             </DialogHeader>
-                            <div>
+                            <div id='print-area'>
                                 <h1 className='font-serif font-bold text-center border-b-4 border-red-500'>{appointment.hospital} HOSPITAL, {appointment.address}</h1>
                             </div>
                             <div>
@@ -78,7 +82,8 @@ const ViewAppointment = () => {
                                 }
                             </ul>
 
-                            <DialogFooter className={'my-3'}>
+                            <DialogFooter className={'my-3 flex items-center justify-between md:justify-between'} id='no-print'>
+                                <Button onClick={HandleDownload} className='bg-green-500 rounded-full' variant='outline'>Print</Button>
                                 <Button onClick={() => setOpenDialog(false)} className='rounded-full' variant='outline'>Close</Button>
                             </DialogFooter>
                         </DialogContent>
