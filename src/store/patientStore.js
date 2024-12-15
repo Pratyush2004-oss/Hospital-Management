@@ -28,7 +28,9 @@ export const usePatientStore = create((set) => ({
                     hospital: input.hospital,
                     problem: input.problem,
                     mobile: input.mobile,
-                    appointmentDate: input.appointmentDate
+                    appointmentDate: input.appointmentDate,
+                    medicines: null,
+                    isAppointed: false
                 }).where(eq(Patients.mobile, input.mobile));
                 if (response) {
                     toast.success("Appointment Updated Successfully");
