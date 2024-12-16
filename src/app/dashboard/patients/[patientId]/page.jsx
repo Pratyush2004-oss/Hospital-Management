@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 import InputMedicines from './_components/InputMedicines';
 import { Button } from '@/components/ui/button';
 import { Loader } from 'lucide-react';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 
 const page = () => {
@@ -21,10 +22,10 @@ const page = () => {
         if (patient && patient.medicines) {
             setSavemedicines(JSON.parse(patient.medicines));
         }
-    },[patient])
+    }, [patient])
     const handleSave = () => {
-        console.log(Savemedicines)
-        appointPatient(Savemedicines, patientId);
+        console.log(medicines)
+        appointPatient(medicines, patientId);
     }
 
     return patient && (
@@ -42,27 +43,36 @@ const page = () => {
                 <div className='flex items-center justify-center gap-1'>Age : <span className='font-bold'>{patient.age}</span></div>
                 <div className='flex items-center justify-center gap-1'>Gender : <span className='font-bold'>{patient.gender}</span></div>
             </div>
-            <div className='flex justify-between m-4'>
-                <h1 className='font-serif text-xl font-bold underline lg:text-2xl'>Suggested Medicines</h1>
-                {
-                    !patient.medicines &&
-                    <Button variant='outline' className='rounded-full bg-gradient-to-tr from-emerald-400 via-emerald-500 to-emerald-600' onClick={handleSave} disabled={loading}>{loading ? <Loader className='animate-spin' /> : 'Save'}</Button>
-                }
+            <div className='m-4'>
+                <h1 className='font-serif text-xl font-bold underline'>Problem</h1>
+                <span className='font-mono font-bold'>{patient.problem}</span>
             </div>
-            <ul>
-                {
-                    patient.medicines ? (
-                        Savemedicines.length > 0 && Savemedicines.map((item, idx) => (
-                            <li key={idx} className='mx-5 list-disc'><span className='font-mono text-lg font-bold'>{item.medicine}</span> - {item.consumption} - {item.days} days </li>
-                        ))
-                    ) : (
-                        medicines.length > 0 && medicines.map((item, idx) => (
-                            <li key={idx} className='mx-5 list-disc'><span className='font-mono text-lg font-bold'>{item.medicine}</span> - {item.consumption} - {item.days} days </li>
-                        ))
-                    )
-                }
-            </ul>
-            <InputMedicines medicines={medicines} setMedicines={setMedicines} />
+            <ScrollArea>
+                <div className='flex justify-between m-4'>
+                    <h1 className='font-serif text-xl font-bold underline lg:text-2xl'>Suggested Medicines</h1>
+                    {
+                        !patient.medicines &&
+                        <Button variant='outline' className='rounded-full bg-gradient-to-tr from-emerald-400 via-emerald-500 to-emerald-600' onClick={handleSave} disabled={loading}>{loading ? <Loader className='animate-spin' /> : 'Save'}</Button>
+                    }
+                </div>
+                <ul>
+                    {
+                        patient.medicines ? (
+                            Savemedicines.length > 0 && Savemedicines.map((item, idx) => (
+                                <li key={idx} className='mx-5 list-disc'><span className='font-mono text-lg font-bold'>{item.medicine}</span> - {item.consumption} - {item.days} days </li>
+                            ))
+                        ) : (
+                            medicines.length > 0 && medicines.map((item, idx) => (
+                                <li key={idx} className='mx-5 list-disc'><span className='font-mono text-lg font-bold'>{item.medicine}</span> - {item.consumption} - {item.days} days </li>
+                            ))
+                        )
+                    }
+                </ul>
+            </ScrollArea>
+            {
+                !patient.medicines &&
+                <InputMedicines medicines={medicines} setMedicines={setMedicines} />
+            }
 
 
         </div>

@@ -218,8 +218,10 @@ export const useStaffStore = create((set, get) => ({
     appointPatient: async (input, patientId) => {
         set({ loading: true, error: null });
         try {
-            const response = await db.update(Patients).set({ medicines: input, isAppointed: true }).where(eq(Patients.id, patientId));
+            const stringInput = JSON.stringify(input);
+            const response = await db.update(Patients).set({ medicines: stringInput, isAppointed: true }).where(eq(Patients.id, patientId));
             if (response) {
+                await db.update(Doctors).set({ patientsAppointed: get().staff.patientsAppointed + 1 }).where(eq(Doctors.email, get().staff.email));
                 set({ loading: false, error: null });
                 toast.success("Patient has been appointed successfully");
             }
@@ -234,8 +236,8 @@ export const useStaffStore = create((set, get) => ({
         finally {
             set({ loading: false });
         }
-    }
+    },
 
-
+    
 
 }));

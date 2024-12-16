@@ -11,6 +11,7 @@ export const Doctors = pgTable("doctors",
         password: varchar("password").notNull(),
         loginType: varchar("loginType").notNull().default("doctor"),
         city: varchar("city").notNull(),
+        patientsAppointed: integer("patientsAppointed").notNull().default(0)
     }
 )
 
