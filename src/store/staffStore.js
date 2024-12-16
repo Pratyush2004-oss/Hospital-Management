@@ -140,9 +140,9 @@ export const useStaffStore = create((set, get) => ({
     checkStaff: () => {
         set({ isCheckingStaff: true, error: null })
         try {
-            const response = localStorage.getItem('staff');
+            const response = JSON.parse(localStorage.getItem('staff'));
             if (response) {
-                set({ staff: JSON.parse(response), isAuthenticated: true })
+                set({ staff: response, isAuthenticated: true })
             }
             else {
                 set({ staff: null, isAuthenticated: false })
@@ -221,7 +221,8 @@ export const useStaffStore = create((set, get) => ({
             const stringInput = JSON.stringify(input);
             const response = await db.update(Patients).set({ medicines: stringInput, isAppointed: true }).where(eq(Patients.id, patientId));
             if (response) {
-                await db.update(Doctors).set({ patientsAppointed: get().staff.patientsAppointed + 1 }).where(eq(Doctors.email, get().staff.email));
+                const doctor = await db.select().from(Doctors).where(eq(Doctors.email, get().staff.email));
+                await db.update(Doctors).set({ patientsAppointed: doctor[0].patientsAppointed + 1 }).where(eq(Doctors.email, get().staff.email));
                 set({ loading: false, error: null });
                 toast.success("Patient has been appointed successfully");
             }
@@ -238,6 +239,6 @@ export const useStaffStore = create((set, get) => ({
         }
     },
 
-    
+
 
 }));
