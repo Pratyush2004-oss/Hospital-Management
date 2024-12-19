@@ -30,6 +30,7 @@ export const usePatientStore = create((set) => ({
                     mobile: input.mobile,
                     appointmentDate: input.appointmentDate,
                     medicines: null,
+                    appointedBy: null,
                     isAppointed: false
                 }).where(eq(Patients.mobile, input.mobile));
                 if (response) {
@@ -64,7 +65,7 @@ export const usePatientStore = create((set) => ({
     viewAppointment: async (input) => {
         set({ loading: true, error: null });
         try {
-            const response = await db.select().from(Patients).where(eq(Patients.mobile, input));
+            const response = await db.select().from(Patients).fullJoin(Doctors, eq(Patients.appointedBy, Doctors.id)).where(eq(Patients.mobile, input));
             if (response[0]) {
                 set({ loading: false, error: null, appointment: response[0] });
             }

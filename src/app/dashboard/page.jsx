@@ -14,14 +14,11 @@ import { useStaffStore } from '@/store/staffStore'
 import { useRouter } from 'next/navigation'
 
 const page = () => {
-  const { getPatients, patients, staff, getCheckedPatients } = useStaffStore();
+  const { getPatients, patients, staff } = useStaffStore();
   const router = useRouter();
   useEffect(() => {
-    if (staff && staff.loginType === 'doctor') {
+    if (staff) {
       getPatients();
-    }
-    else {
-      getCheckedPatients();
     }
   }, [staff]);
   return (

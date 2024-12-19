@@ -1,6 +1,6 @@
 import { db } from "@/config";
 import { Doctors, Medicos, Patients } from "@/config/schema";
-import { and, eq, ne } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { toast } from "sonner";
 import { create } from "zustand";
 export const useStaffStore = create((set, get) => ({
@@ -164,12 +164,25 @@ export const useStaffStore = create((set, get) => ({
         set({ loading: true, error: null });
         try {
             const today = new Date();
-            const response = await db.select().from(Patients).where(and(eq(Patients.appointmentDate, today), eq(Patients.address, get().staff.city), eq(Patients.hospital, get().staff.hospital)));
-            if (response) {
-                set({ loading: false, error: null, patients: response });
+            if (!get().staff) return;
+
+            if (get().staff.loginType === 'doctor') {
+                const response = await db.select().from(Patients).where(and(eq(Patients.appointmentDate, today), eq(Patients.address, get().staff.city), eq(Patients.hospital, get().staff.hospital), eq(Patients.isAppointed, false)));
+                if (response) {
+                    set({ loading: false, error: null, patients: response });
+                }
+                else {
+                    set({ loading: false, error: null, patients: [] });
+                }
             }
             else {
-                set({ loading: false, error: null, patients: [] });
+                const response = await db.select().from(Patients).where(and(eq(Patients.appointmentDate, today), eq(Patients.address, get().staff.city), eq(Patients.hospital, get().staff.hospital), eq(Patients.isAppointed, true)));
+                if (response) {
+                    set({ loading: false, error: null, patients: response });
+                }
+                else {
+                    set({ loading: false, error: null, patients: [] });
+                }
             }
         } catch (error) {
             set({ loading: false, error: error.message });
@@ -200,12 +213,25 @@ export const useStaffStore = create((set, get) => ({
     getCheckedPatients: async () => {
         set({ loading: true, error: null });
         try {
-            const response = await db.select().from(Patients).where(ne(Patients.medicines, null));
-            if (response) {
-                set({ loading: false, error: null, patients: response });
+            if (!get().staff) return;
+
+            if (get().staff.loginType === 'doctor') {
+                const response = await db.select().from(Patients).where(eq(Patients.isAppointed, true), eq(Patients.address, get().staff.city), eq(Patients.hospital, get().staff.hospital));
+                if (response) {
+                    set({ loading: false, error: null, patients: response });
+                }
+                else {
+                    set({ loading: false, error: null, patients: [] });
+                }
             }
             else {
-                set({ loading: false, error: null, patients: [] });
+                const response = await db.select().from(Patients).where(and(eq(Patients.isAppointed, true), eq(Patients.hospital, get().staff.hospital), eq(Patients.address, get().staff.city)));
+                if (response) {
+                    set({ loading: false, error: null, patients: response });
+                }
+                else {
+                    set({ loading: false, error: null, patients: [] });
+                }
             }
         } catch (error) {
             set({ loading: false, error: error.message });
@@ -219,7 +245,7 @@ export const useStaffStore = create((set, get) => ({
         set({ loading: true, error: null });
         try {
             const stringInput = JSON.stringify(input);
-            const response = await db.update(Patients).set({ medicines: stringInput, isAppointed: true }).where(eq(Patients.id, patientId));
+            const response = await db.update(Patients).set({ medicines: stringInput, isAppointed: true, appointedBy: get().staff.id }).where(eq(Patients.id, patientId));
             if (response) {
                 const doctor = await db.select().from(Doctors).where(eq(Doctors.email, get().staff.email));
                 await db.update(Doctors).set({ patientsAppointed: doctor[0].patientsAppointed + 1 }).where(eq(Doctors.email, get().staff.email));

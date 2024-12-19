@@ -24,8 +24,8 @@ const ViewAppointment = () => {
     }
     const [medicines, setMedicines] = useState([]);
     useEffect(() => {
-        if (appointment && appointment.medicines) {
-            setMedicines(JSON.parse(appointment.medicines));
+        if (appointment && appointment.patients.medicines) {
+            setMedicines(JSON.parse(appointment.patients.medicines));
         }
     }, [appointment])
 
@@ -58,15 +58,20 @@ const ViewAppointment = () => {
                                 </DialogDescription>
                             </DialogHeader>
                             <div id='print-area'>
-                                <h1 className='font-serif font-bold text-center border-b-4 border-red-500'>{appointment.hospital} HOSPITAL, {appointment.address}</h1>
+                                <h1 className='font-serif font-bold text-center border-b-4 border-red-500'>{appointment.patients.hospital} HOSPITAL, {appointment.patients.address}</h1>
                             </div>
-                            <div>
-                                <h1 className='text-sm font-bold bold'>Date: {appointment.appointmentDate}</h1>
+                            <div className='flex items-center justify-between'>
+                                {
+                                    appointment.patients.appointedBy && (
+                                        <h1 className='text-sm font-bold bold'>Appointed By: {appointment.doctors.name}</h1>
+                                    )
+                                }
+                                <h1 className='text-sm font-bold bold'>Date: {appointment.patients.appointmentDate}</h1>
                             </div>
                             <div className='grid grid-cols-2 gap-2 text-sm border-b-2'>
-                                <div className='flex items-center justify-center col-span-2 gap-1'>Name : <span className='font-bold'>{appointment.name}</span></div>
-                                <div className='flex items-center justify-center gap-1'>Age : <span className='font-bold'>{appointment.age}</span></div>
-                                <div className='flex items-center justify-center gap-1'>Gender : <span className='font-bold'>{appointment.gender}</span></div>
+                                <div className='flex items-center justify-center col-span-2 gap-1'>Name : <span className='font-bold'>{appointment.patients.name}</span></div>
+                                <div className='flex items-center justify-center gap-1'>Age : <span className='font-bold'>{appointment.patients.age}</span></div>
+                                <div className='flex items-center justify-center gap-1'>Gender : <span className='font-bold'>{appointment.patients.gender}</span></div>
                             </div>
                             <div>
                                 <h1 className='font-serif font-bold'>Suggested Medicines</h1>
