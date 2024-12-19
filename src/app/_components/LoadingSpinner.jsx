@@ -3,7 +3,7 @@ import React from 'react'
 
 const LoadingSpinner = () => {
     return (
-        <div className='flex items-center justify-center h-screen'>
+        <div className='flex items-center justify-center h-[50vh]'>
             <Loader2 className='text-red-500 size-64 animate-spin' />
         </div>
     )

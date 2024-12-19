@@ -33,7 +33,6 @@ const page = () => {
         </div>
       </div>
 
-
       {/* Doctors */}
       <div className='flex flex-col p-4 min-h-[65vh]' id='doctors'>
         <h1 className='font-serif text-3xl font-extrabold'>Meet Our Doctors</h1>
@@ -84,6 +83,7 @@ const page = () => {
               <div key={medico.id} className='flex flex-col items-center p-4 border-2 border-red-500 rounded-lg'>
                 <h1 className='flex gap-5 font-serif text-2xl font-bold'><User /> {medico.name}</h1>
                 <h1 className='font-serif text-lg font-bold'>{medico.experience} years</h1>
+                <h1 className='font-serif text-lg font-bold'>{medico.city}</h1>
                 <h1 className='font-serif text-lg font-bold'>{medico.hospital}</h1>
               </div>
             ))
