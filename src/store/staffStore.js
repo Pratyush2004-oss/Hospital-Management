@@ -1,5 +1,6 @@
 import { db } from "@/config";
 import { Doctors, Medicos, Patients } from "@/config/schema";
+import clsx from "clsx";
 import { and, eq } from "drizzle-orm";
 import { toast } from "sonner";
 import { create } from "zustand";
@@ -216,7 +217,7 @@ export const useStaffStore = create((set, get) => ({
             if (!get().staff) return;
 
             if (get().staff.loginType === 'doctor') {
-                const response = await db.select().from(Patients).where(eq(Patients.isAppointed, true), eq(Patients.address, get().staff.city), eq(Patients.hospital, get().staff.hospital));
+                const response = await db.select().from(Patients).fullJoin(Doctors, eq(Patients.appointedBy, Doctors.id)).where(and(eq(Patients.isAppointed, true), eq(Patients.appointedBy, get().staff.id)));
                 if (response) {
                     set({ loading: false, error: null, patients: response });
                 }

@@ -40,10 +40,10 @@ const page = () => {
               patients && patients.map((patient, idx) => (
                 <TableRow key={idx} className='cursor-pointer' onClick={() => router.push(`patients/${patient.id}`)}>
                   <TableCell className="font-medium">{idx + 1}</TableCell>
-                  <TableCell>{patient.name}</TableCell>
-                  <TableCell>{patient.age}</TableCell>
-                  <TableCell>{patient.gender}</TableCell>
-                  <TableCell className="text-right">{patient.problem}</TableCell>
+                  <TableCell>{patient.patients.name}</TableCell>
+                  <TableCell>{patient.patients.age}</TableCell>
+                  <TableCell>{patient.patients.gender}</TableCell>
+                  <TableCell className="text-right">{patient.patients.problem}</TableCell>
                 </TableRow>
               ))
             }
