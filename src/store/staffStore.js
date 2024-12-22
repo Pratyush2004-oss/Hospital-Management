@@ -1,6 +1,5 @@
 import { db } from "@/config";
 import { Doctors, Medicos, Patients } from "@/config/schema";
-import clsx from "clsx";
 import { and, eq } from "drizzle-orm";
 import { toast } from "sonner";
 import { create } from "zustand";
